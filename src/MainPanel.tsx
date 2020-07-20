@@ -272,9 +272,6 @@ export class MainPanel extends PureComponent<Props, State> {
       const currentStore = this.state.currentPolygon;
 
       if (this.startObj && this.destObj && (this.startObj[currentStore] || this.destObj[currentStore])) {
-        console.log('Debugging ', currentStore);
-        console.log('startObj ', this.startObj[currentStore]);
-        console.log('destObj ', this.destObj[currentStore]);
         const { infoMap1, infoMap2 } = createHeatInfo(
           this.props.options.geojson1,
           this.props.options.geojson2,

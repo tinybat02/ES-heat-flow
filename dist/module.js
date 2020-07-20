@@ -57511,10 +57511,6 @@ function (_super) {
       var currentStore = this.state.currentPolygon;
 
       if (this.startObj && this.destObj && (this.startObj[currentStore] || this.destObj[currentStore])) {
-        console.log('Debugging ', currentStore);
-        console.log('startObj ', this.startObj[currentStore]);
-        console.log('destObj ', this.destObj[currentStore]);
-
         var _b = Object(_utils_helpers__WEBPACK_IMPORTED_MODULE_10__["createHeatInfo"])(this.props.options.geojson1, this.props.options.geojson2, this.startObj[currentStore], this.destObj[currentStore]),
             infoMap1 = _b.infoMap1,
             infoMap2 = _b.infoMap2;
@@ -57798,7 +57794,6 @@ var createHeatInfo = function createHeatInfo(geojson1, geojson2, startObj, destO
         combineObj[store] = Math.log2(destObj[store]);
       }
     });
-    console.log('combine ', combineObj);
 
     var _c = measureObj(combineObj),
         min_3 = _c.min,

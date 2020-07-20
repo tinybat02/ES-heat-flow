@@ -187,7 +187,7 @@ export const createHeatInfo = (
         combineObj[store] = Math.log2(destObj[store]);
       }
     });
-    console.log('combine ', combineObj);
+
     const { min, range } = measureObj(combineObj);
 
     const listDestinations = Object.keys(startObj);

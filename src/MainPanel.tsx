@@ -8,7 +8,7 @@ import { fromLonLat } from 'ol/proj';
 import { defaults, DragPan, MouseWheelZoom } from 'ol/interaction';
 import { platformModifierKeyOnly } from 'ol/events/condition';
 import Select from 'ol/interaction/Select';
-import { Style, Fill } from 'ol/style';
+import { Style, Fill, Stroke } from 'ol/style';
 import { pointerMove } from 'ol/events/condition';
 import { SelectEvent } from 'ol/interaction/Select';
 import { createPolygonLayer, processTransitionData, createHeatInfo } from './utils/helpers';
@@ -131,6 +131,10 @@ export class MainPanel extends PureComponent<Props, State> {
             fill: new Fill({
               color: '#ffffff00',
             }),
+            stroke: new Stroke({
+              color: '#49A8DE',
+              width: 1,
+            }),
           }),
         ];
 
@@ -148,6 +152,10 @@ export class MainPanel extends PureComponent<Props, State> {
           new Style({
             fill: new Fill({
               color: '#ffffff00',
+            }),
+            stroke: new Stroke({
+              color: '#49A8DE',
+              width: 1,
             }),
           }),
         ];
@@ -264,6 +272,9 @@ export class MainPanel extends PureComponent<Props, State> {
       const currentStore = this.state.currentPolygon;
 
       if (this.startObj && this.destObj && (this.startObj[currentStore] || this.destObj[currentStore])) {
+        console.log('Debugging ', currentStore);
+        console.log('startObj ', this.startObj[currentStore]);
+        console.log('destObj ', this.destObj[currentStore]);
         const { infoMap1, infoMap2 } = createHeatInfo(
           this.props.options.geojson1,
           this.props.options.geojson2,

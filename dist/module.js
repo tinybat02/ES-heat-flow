@@ -57742,6 +57742,7 @@ var createHeatInfo = function createHeatInfo(geojson1, geojson2, startObj, destO
   var infoMap2Feature = [];
 
   if (startObj && !destObj) {
+    delete startObj['Corridor'];
     Object.keys(startObj).map(function (store) {
       combineObj[store] = Math.log2(startObj[store]);
     });
@@ -57762,6 +57763,7 @@ var createHeatInfo = function createHeatInfo(geojson1, geojson2, startObj, destO
       }
     });
   } else if (!startObj && destObj) {
+    delete destObj['Corridor'];
     Object.keys(destObj).map(function (store) {
       combineObj[store] = Math.log2(destObj[store]);
     });
@@ -57782,6 +57784,8 @@ var createHeatInfo = function createHeatInfo(geojson1, geojson2, startObj, destO
       }
     });
   } else if (startObj && destObj) {
+    delete startObj['Corridor'];
+    delete destObj['Corridor'];
     Object.keys(startObj).map(function (store) {
       if (destObj[store]) {
         combineObj[store] = Math.log2(startObj[store] + destObj[store]);

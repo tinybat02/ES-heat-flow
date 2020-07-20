@@ -109,6 +109,7 @@ export const createHeatInfo = (
   const infoMap1Feature: Feature[] = [];
   const infoMap2Feature: Feature[] = [];
   if (startObj && !destObj) {
+    delete startObj['Corridor'];
     Object.keys(startObj).map(store => {
       combineObj[store] = Math.log2(startObj[store]);
     });
@@ -140,6 +141,7 @@ export const createHeatInfo = (
       }
     });
   } else if (!startObj && destObj) {
+    delete destObj['Corridor'];
     Object.keys(destObj).map(store => {
       combineObj[store] = Math.log2(destObj[store]);
     });
@@ -170,6 +172,8 @@ export const createHeatInfo = (
       }
     });
   } else if (startObj && destObj) {
+    delete startObj['Corridor'];
+    delete destObj['Corridor'];
     Object.keys(startObj).map(store => {
       if (destObj[store]) {
         combineObj[store] = Math.log2(startObj[store] + destObj[store]);

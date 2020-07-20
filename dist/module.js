@@ -57798,6 +57798,7 @@ var createHeatInfo = function createHeatInfo(geojson1, geojson2, startObj, destO
         combineObj[store] = Math.log2(destObj[store]);
       }
     });
+    console.log('combine ', combineObj);
 
     var _c = measureObj(combineObj),
         min_3 = _c.min,

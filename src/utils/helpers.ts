@@ -4,8 +4,8 @@ import Feature from 'ol/Feature';
 import Polygon from 'ol/geom/Polygon';
 import { Style, Fill, Stroke, Text } from 'ol/style';
 import { GeoJSON, FeatureGeojson } from '../types';
-import centroid from '@turf/centroid';
-import Point from 'ol/geom/Point';
+// import centroid from '@turf/centroid';
+// import Point from 'ol/geom/Point';
 
 const percentageToHsl = (percentage: number) => {
   const hue = percentage * -120 + 120;
@@ -39,20 +39,35 @@ export const createTransparentPolygon = (coordinates: number[][][], label: strin
 };
 
 export const createPolygonInfo = (feature: FeatureGeojson, label: string, color: string) => {
-  const centerCoord = centroid(feature).geometry.coordinates;
+  // const centerCoord = centroid(feature).geometry.coordinates;
   const polygonFeature = new Feature({
     type: 'Polygon',
     geometry: new Polygon(feature.geometry.coordinates).transform('EPSG:4326', 'EPSG:3857'),
   });
 
-  polygonFeature.setStyle([
+  // polygonFeature.setStyle([
+  //   new Style({
+  //     fill: new Fill({
+  //       color: color,
+  //     }),
+  //   }),
+  //   new Style({
+  //     geometry: new Point(centerCoord).transform('EPSG:4326', 'EPSG:3857'),
+  //     text: new Text({
+  //       stroke: new Stroke({
+  //         color: '#fff',
+  //         width: 3,
+  //       }),
+  //       font: '15px Calibri,sans-serif',
+  //       text: label,
+  //     }),
+  //   }),
+  // ]);
+  polygonFeature.setStyle(
     new Style({
       fill: new Fill({
         color: color,
       }),
-    }),
-    new Style({
-      geometry: new Point(centerCoord).transform('EPSG:4326', 'EPSG:3857'),
       text: new Text({
         stroke: new Stroke({
           color: '#fff',
@@ -61,8 +76,8 @@ export const createPolygonInfo = (feature: FeatureGeojson, label: string, color:
         font: '15px Calibri,sans-serif',
         text: label,
       }),
-    }),
-  ]);
+    })
+  );
   return polygonFeature;
 };
 

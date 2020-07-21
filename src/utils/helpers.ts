@@ -135,27 +135,24 @@ export const createHeatInfo = (
 
     // const listDestinations = Object.keys(startObj);
     const listDestinations = Object.keys(combineObj);
+
     geojson1.features.map(feature => {
       if (feature.properties && feature.properties.name && listDestinations.includes(feature.properties.name)) {
-        infoMap1Feature.push(
-          createPolygonInfo(
-            feature,
-            `To ${startObj[feature.properties.name]}`,
-            percentageToHsl((combineObj[feature.properties.name] - min) / range)
-          )
-        );
+        const color =
+          range == 0
+            ? 'hsla(60, 100%, 50%, 0.3)'
+            : percentageToHsl((combineObj[feature.properties.name] - min) / range);
+        infoMap1Feature.push(createPolygonInfo(feature, `To ${startObj[feature.properties.name]}`, color));
       }
     });
 
     geojson2.features.map(feature => {
       if (feature.properties && feature.properties.name && listDestinations.includes(feature.properties.name)) {
-        infoMap2Feature.push(
-          createPolygonInfo(
-            feature,
-            `To ${startObj[feature.properties.name]}`,
-            percentageToHsl((combineObj[feature.properties.name] - min) / range)
-          )
-        );
+        const color =
+          range == 0
+            ? 'hsla(60, 100%, 50%, 0.3)'
+            : percentageToHsl((combineObj[feature.properties.name] - min) / range);
+        infoMap2Feature.push(createPolygonInfo(feature, `To ${startObj[feature.properties.name]}`, color));
       }
     });
   } else if (!startObj && destObj) {
@@ -172,24 +169,20 @@ export const createHeatInfo = (
 
     geojson1.features.map(feature => {
       if (feature.properties && feature.properties.name && listSources.includes(feature.properties.name)) {
-        infoMap1Feature.push(
-          createPolygonInfo(
-            feature,
-            `From ${destObj[feature.properties.name]}`,
-            percentageToHsl((combineObj[feature.properties.name] - min) / range)
-          )
-        );
+        const color =
+          range == 0
+            ? 'hsla(60, 100%, 50%, 0.3)'
+            : percentageToHsl((combineObj[feature.properties.name] - min) / range);
+        infoMap1Feature.push(createPolygonInfo(feature, `From ${destObj[feature.properties.name]}`, color));
       }
     });
     geojson2.features.map(feature => {
       if (feature.properties && feature.properties.name && listSources.includes(feature.properties.name)) {
-        infoMap2Feature.push(
-          createPolygonInfo(
-            feature,
-            `From ${destObj[feature.properties.name]}`,
-            percentageToHsl((combineObj[feature.properties.name] - min) / range)
-          )
-        );
+        const color =
+          range == 0
+            ? 'hsla(60, 100%, 50%, 0.3)'
+            : percentageToHsl((combineObj[feature.properties.name] - min) / range);
+        infoMap2Feature.push(createPolygonInfo(feature, `From ${destObj[feature.properties.name]}`, color));
       }
     });
   } else if (startObj && destObj) {
@@ -211,9 +204,7 @@ export const createHeatInfo = (
       } else {
         if (startObj[store] > 3) {
           combineObj[store] = Math.log2(startObj[store]);
-        } /*  else {
-          delete startObj[store];
-        } */
+        }
       }
     });
 
@@ -237,10 +228,12 @@ export const createHeatInfo = (
         const label =
           `${startObj[feature.properties.name] ? `To ${startObj[feature.properties.name]}` : ''}` +
           `${destObj[feature.properties.name] ? ` From ${destObj[feature.properties.name]}` : ''}`;
+        const color =
+          range == 0
+            ? 'hsla(60, 100%, 50%, 0.3)'
+            : percentageToHsl((combineObj[feature.properties.name] - min) / range);
 
-        infoMap1Feature.push(
-          createPolygonInfo(feature, label, percentageToHsl((combineObj[feature.properties.name] - min) / range))
-        );
+        infoMap1Feature.push(createPolygonInfo(feature, label, color));
       }
     });
 
@@ -249,10 +242,12 @@ export const createHeatInfo = (
         const label =
           `${startObj[feature.properties.name] ? `To ${startObj[feature.properties.name]}` : ''}` +
           `${destObj[feature.properties.name] ? ` From ${destObj[feature.properties.name]}` : ''}`;
+        const color =
+          range == 0
+            ? 'hsla(60, 100%, 50%, 0.3)'
+            : percentageToHsl((combineObj[feature.properties.name] - min) / range);
 
-        infoMap2Feature.push(
-          createPolygonInfo(feature, label, percentageToHsl((combineObj[feature.properties.name] - min) / range))
-        );
+        infoMap2Feature.push(createPolygonInfo(feature, label, color));
       }
     });
   }

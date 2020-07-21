@@ -55830,12 +55830,14 @@ var createHeatInfo = function createHeatInfo(geojson1, geojson2, startObj, destO
     var listDestinations_1 = Object.keys(combineObj);
     geojson1.features.map(function (feature) {
       if (feature.properties && feature.properties.name && listDestinations_1.includes(feature.properties.name)) {
-        infoMap1Feature.push(createPolygonInfo(feature, "To " + startObj[feature.properties.name], percentageToHsl((combineObj[feature.properties.name] - min_1) / range_1)));
+        var color = range_1 == 0 ? 'hsla(60, 100%, 50%, 0.3)' : percentageToHsl((combineObj[feature.properties.name] - min_1) / range_1);
+        infoMap1Feature.push(createPolygonInfo(feature, "To " + startObj[feature.properties.name], color));
       }
     });
     geojson2.features.map(function (feature) {
       if (feature.properties && feature.properties.name && listDestinations_1.includes(feature.properties.name)) {
-        infoMap2Feature.push(createPolygonInfo(feature, "To " + startObj[feature.properties.name], percentageToHsl((combineObj[feature.properties.name] - min_1) / range_1)));
+        var color = range_1 == 0 ? 'hsla(60, 100%, 50%, 0.3)' : percentageToHsl((combineObj[feature.properties.name] - min_1) / range_1);
+        infoMap2Feature.push(createPolygonInfo(feature, "To " + startObj[feature.properties.name], color));
       }
     });
   } else if (!startObj && destObj) {
@@ -55854,12 +55856,14 @@ var createHeatInfo = function createHeatInfo(geojson1, geojson2, startObj, destO
     var listSources_1 = Object.keys(combineObj);
     geojson1.features.map(function (feature) {
       if (feature.properties && feature.properties.name && listSources_1.includes(feature.properties.name)) {
-        infoMap1Feature.push(createPolygonInfo(feature, "From " + destObj[feature.properties.name], percentageToHsl((combineObj[feature.properties.name] - min_2) / range_2)));
+        var color = range_2 == 0 ? 'hsla(60, 100%, 50%, 0.3)' : percentageToHsl((combineObj[feature.properties.name] - min_2) / range_2);
+        infoMap1Feature.push(createPolygonInfo(feature, "From " + destObj[feature.properties.name], color));
       }
     });
     geojson2.features.map(function (feature) {
       if (feature.properties && feature.properties.name && listSources_1.includes(feature.properties.name)) {
-        infoMap2Feature.push(createPolygonInfo(feature, "From " + destObj[feature.properties.name], percentageToHsl((combineObj[feature.properties.name] - min_2) / range_2)));
+        var color = range_2 == 0 ? 'hsla(60, 100%, 50%, 0.3)' : percentageToHsl((combineObj[feature.properties.name] - min_2) / range_2);
+        infoMap2Feature.push(createPolygonInfo(feature, "From " + destObj[feature.properties.name], color));
       }
     });
   } else if (startObj && destObj) {
@@ -55882,10 +55886,6 @@ var createHeatInfo = function createHeatInfo(geojson1, geojson2, startObj, destO
         if (startObj[store] > 3) {
           combineObj[store] = Math.log2(startObj[store]);
         }
-        /*  else {
-        delete startObj[store];
-        } */
-
       }
     });
     Object.keys(destObj).map(function (store) {
@@ -55907,13 +55907,15 @@ var createHeatInfo = function createHeatInfo(geojson1, geojson2, startObj, destO
     geojson1.features.map(function (feature) {
       if (feature.properties && feature.properties.name && allRelatedStores_1.includes(feature.properties.name)) {
         var label = "" + (startObj[feature.properties.name] ? "To " + startObj[feature.properties.name] : '') + ("" + (destObj[feature.properties.name] ? " From " + destObj[feature.properties.name] : ''));
-        infoMap1Feature.push(createPolygonInfo(feature, label, percentageToHsl((combineObj[feature.properties.name] - min_3) / range_3)));
+        var color = range_3 == 0 ? 'hsla(60, 100%, 50%, 0.3)' : percentageToHsl((combineObj[feature.properties.name] - min_3) / range_3);
+        infoMap1Feature.push(createPolygonInfo(feature, label, color));
       }
     });
     geojson2.features.map(function (feature) {
       if (feature.properties && feature.properties.name && allRelatedStores_1.includes(feature.properties.name)) {
         var label = "" + (startObj[feature.properties.name] ? "To " + startObj[feature.properties.name] : '') + ("" + (destObj[feature.properties.name] ? " From " + destObj[feature.properties.name] : ''));
-        infoMap2Feature.push(createPolygonInfo(feature, label, percentageToHsl((combineObj[feature.properties.name] - min_3) / range_3)));
+        var color = range_3 == 0 ? 'hsla(60, 100%, 50%, 0.3)' : percentageToHsl((combineObj[feature.properties.name] - min_3) / range_3);
+        infoMap2Feature.push(createPolygonInfo(feature, label, color));
       }
     });
   }

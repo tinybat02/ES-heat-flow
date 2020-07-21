@@ -55867,14 +55867,17 @@ var createHeatInfo = function createHeatInfo(geojson1, geojson2, startObj, destO
     delete destObj['Corridor'];
     Object.keys(startObj).map(function (store) {
       if (destObj[store]) {
-        if (startObj[store] + destObj[store] > 3) {
+        // if (startObj[store] + destObj[store] > 3) {
+        //   combineObj[store] = Math.log2(startObj[store] + destObj[store]);
+        // }
+        if (startObj[store] > 3 && destObj[store] > 3) {
           combineObj[store] = Math.log2(startObj[store] + destObj[store]);
+        } else if (startObj[store] > 3 && destObj[store] <= 3) {
+          combineObj[store] = Math.log2(startObj[store]);
+          delete destObj[store];
+        } else if (startObj[store] <= 3 && destObj[store] > 3) {
+          delete startObj[store];
         }
-        /* else {
-        delete startObj[store];
-        delete destObj[store];
-        } */
-
       } else {
         if (startObj[store] > 3) {
           combineObj[store] = Math.log2(startObj[store]);

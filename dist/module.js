@@ -55817,14 +55817,17 @@ var createHeatInfo = function createHeatInfo(geojson1, geojson2, startObj, destO
   if (startObj && !destObj) {
     delete startObj['Corridor'];
     Object.keys(startObj).map(function (store) {
-      combineObj[store] = Math.log2(startObj[store]);
+      if (startObj[store] > 3) {
+        combineObj[store] = Math.log2(startObj[store]);
+      }
     });
 
     var _a = measureObj(combineObj),
         min_1 = _a.min,
-        range_1 = _a.range;
+        range_1 = _a.range; // const listDestinations = Object.keys(startObj);
 
-    var listDestinations_1 = Object.keys(startObj);
+
+    var listDestinations_1 = Object.keys(combineObj);
     geojson1.features.map(function (feature) {
       if (feature.properties && feature.properties.name && listDestinations_1.includes(feature.properties.name)) {
         infoMap1Feature.push(createPolygonInfo(feature, "To " + startObj[feature.properties.name], percentageToHsl((combineObj[feature.properties.name] - min_1) / range_1)));
@@ -55838,14 +55841,17 @@ var createHeatInfo = function createHeatInfo(geojson1, geojson2, startObj, destO
   } else if (!startObj && destObj) {
     delete destObj['Corridor'];
     Object.keys(destObj).map(function (store) {
-      combineObj[store] = Math.log2(destObj[store]);
+      if (destObj[store] > 3) {
+        combineObj[store] = Math.log2(destObj[store]);
+      }
     });
 
     var _b = measureObj(combineObj),
         min_2 = _b.min,
-        range_2 = _b.range;
+        range_2 = _b.range; // const listSources = Object.keys(destObj);
 
-    var listSources_1 = Object.keys(destObj);
+
+    var listSources_1 = Object.keys(combineObj);
     geojson1.features.map(function (feature) {
       if (feature.properties && feature.properties.name && listSources_1.includes(feature.properties.name)) {
         infoMap1Feature.push(createPolygonInfo(feature, "From " + destObj[feature.properties.name], percentageToHsl((combineObj[feature.properties.name] - min_2) / range_2)));
@@ -55861,26 +55867,40 @@ var createHeatInfo = function createHeatInfo(geojson1, geojson2, startObj, destO
     delete destObj['Corridor'];
     Object.keys(startObj).map(function (store) {
       if (destObj[store]) {
-        combineObj[store] = Math.log2(startObj[store] + destObj[store]);
+        if (startObj[store] + destObj[store] > 3) {
+          combineObj[store] = Math.log2(startObj[store] + destObj[store]);
+        }
+        /* else {
+        delete startObj[store];
+        delete destObj[store];
+        } */
+
       } else {
-        combineObj[store] = Math.log2(startObj[store]);
+        if (startObj[store] > 3) {
+          combineObj[store] = Math.log2(startObj[store]);
+        }
+        /*  else {
+        delete startObj[store];
+        } */
+
       }
     });
     Object.keys(destObj).map(function (store) {
       if (!startObj[store]) {
-        combineObj[store] = Math.log2(destObj[store]);
+        if (destObj[store] > 3) {
+          combineObj[store] = Math.log2(destObj[store]);
+        }
       }
     });
 
     var _c = measureObj(combineObj),
         min_3 = _c.min,
-        range_3 = _c.range;
+        range_3 = _c.range; // const listDestinations = Object.keys(startObj);
+    // const listSources = Object.keys(destObj);
+    // const allRelatedStores = [...new Set([...listDestinations, ...listSources])];
 
-    var listDestinations = Object.keys(startObj);
-    var listSources = Object.keys(destObj);
 
-    var allRelatedStores_1 = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spread"])(new Set(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spread"])(listDestinations, listSources)));
-
+    var allRelatedStores_1 = Object.keys(combineObj);
     geojson1.features.map(function (feature) {
       if (feature.properties && feature.properties.name && allRelatedStores_1.includes(feature.properties.name)) {
         var label = "" + (startObj[feature.properties.name] ? "To " + startObj[feature.properties.name] : '') + ("" + (destObj[feature.properties.name] ? " From " + destObj[feature.properties.name] : ''));

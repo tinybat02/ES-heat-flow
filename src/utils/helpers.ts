@@ -126,12 +126,15 @@ export const createHeatInfo = (
   if (startObj && !destObj) {
     delete startObj['Corridor'];
     Object.keys(startObj).map(store => {
-      combineObj[store] = Math.log2(startObj[store]);
+      if (startObj[store] > 3) {
+        combineObj[store] = Math.log2(startObj[store]);
+      }
     });
 
     const { min, range } = measureObj(combineObj);
 
-    const listDestinations = Object.keys(startObj);
+    // const listDestinations = Object.keys(startObj);
+    const listDestinations = Object.keys(combineObj);
     geojson1.features.map(feature => {
       if (feature.properties && feature.properties.name && listDestinations.includes(feature.properties.name)) {
         infoMap1Feature.push(
@@ -158,11 +161,14 @@ export const createHeatInfo = (
   } else if (!startObj && destObj) {
     delete destObj['Corridor'];
     Object.keys(destObj).map(store => {
-      combineObj[store] = Math.log2(destObj[store]);
+      if (destObj[store] > 3) {
+        combineObj[store] = Math.log2(destObj[store]);
+      }
     });
     const { min, range } = measureObj(combineObj);
 
-    const listSources = Object.keys(destObj);
+    // const listSources = Object.keys(destObj);
+    const listSources = Object.keys(combineObj);
 
     geojson1.features.map(feature => {
       if (feature.properties && feature.properties.name && listSources.includes(feature.properties.name)) {
@@ -191,23 +197,35 @@ export const createHeatInfo = (
     delete destObj['Corridor'];
     Object.keys(startObj).map(store => {
       if (destObj[store]) {
-        combineObj[store] = Math.log2(startObj[store] + destObj[store]);
+        if (startObj[store] + destObj[store] > 3) {
+          combineObj[store] = Math.log2(startObj[store] + destObj[store]);
+        } /* else {
+          delete startObj[store];
+          delete destObj[store];
+        } */
       } else {
-        combineObj[store] = Math.log2(startObj[store]);
+        if (startObj[store] > 3) {
+          combineObj[store] = Math.log2(startObj[store]);
+        } /*  else {
+          delete startObj[store];
+        } */
       }
     });
 
     Object.keys(destObj).map(store => {
       if (!startObj[store]) {
-        combineObj[store] = Math.log2(destObj[store]);
+        if (destObj[store] > 3) {
+          combineObj[store] = Math.log2(destObj[store]);
+        }
       }
     });
 
     const { min, range } = measureObj(combineObj);
 
-    const listDestinations = Object.keys(startObj);
-    const listSources = Object.keys(destObj);
-    const allRelatedStores = [...new Set([...listDestinations, ...listSources])];
+    // const listDestinations = Object.keys(startObj);
+    // const listSources = Object.keys(destObj);
+    // const allRelatedStores = [...new Set([...listDestinations, ...listSources])];
+    const allRelatedStores = Object.keys(combineObj);
 
     geojson1.features.map(feature => {
       if (feature.properties && feature.properties.name && allRelatedStores.includes(feature.properties.name)) {

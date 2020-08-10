@@ -55727,14 +55727,38 @@ var measureObj = function measureObj(obj) {
     min: min,
     range: range
   };
-};
+}; // export const createTransparentPolygon = (coordinates: number[][][], label: string) => {
+//   const polygonFeature = new Feature({
+//     type: 'Polygon',
+//     geometry: new Polygon(coordinates).transform('EPSG:4326', 'EPSG:3857'),
+//   });
+//   polygonFeature.set('label', label);
+//   polygonFeature.setStyle(
+//     new Style({
+//       fill: new Fill({
+//         color: '#ffffff00',
+//       }),
+//     })
+//   );
+//   return polygonFeature;
+// };
 
-var createTransparentPolygon = function createTransparentPolygon(coordinates, label) {
+
+var createTransparentPolygon = function createTransparentPolygon(feature) {
+  var coordinates = [];
+
+  if (feature.geometry.type == 'Polygon') {
+    coordinates = feature.geometry.coordinates;
+  } else if (feature.geometry.type == 'LineString') {
+    // @ts-ignore
+    coordinates = [feature.geometry.coordinates];
+  }
+
   var polygonFeature = new ol_Feature__WEBPACK_IMPORTED_MODULE_3__["default"]({
     type: 'Polygon',
     geometry: new ol_geom_Polygon__WEBPACK_IMPORTED_MODULE_4__["default"](coordinates).transform('EPSG:4326', 'EPSG:3857')
   });
-  polygonFeature.set('label', label);
+  polygonFeature.set('label', feature.properties.name);
   polygonFeature.setStyle(new ol_style__WEBPACK_IMPORTED_MODULE_5__["Style"]({
     fill: new ol_style__WEBPACK_IMPORTED_MODULE_5__["Fill"]({
       color: '#ffffff00'
@@ -55744,9 +55768,18 @@ var createTransparentPolygon = function createTransparentPolygon(coordinates, la
 };
 var createPolygonInfo = function createPolygonInfo(feature, label, color) {
   // const centerCoord = centroid(feature).geometry.coordinates;
+  var coordinates = [];
+
+  if (feature.geometry.type == 'Polygon') {
+    coordinates = feature.geometry.coordinates;
+  } else if (feature.geometry.type == 'LineString') {
+    //@ts-ignore
+    coordinates = [feature.geometry.coordinates];
+  }
+
   var polygonFeature = new ol_Feature__WEBPACK_IMPORTED_MODULE_3__["default"]({
     type: 'Polygon',
-    geometry: new ol_geom_Polygon__WEBPACK_IMPORTED_MODULE_4__["default"](feature.geometry.coordinates).transform('EPSG:4326', 'EPSG:3857')
+    geometry: new ol_geom_Polygon__WEBPACK_IMPORTED_MODULE_4__["default"](coordinates).transform('EPSG:4326', 'EPSG:3857')
   }); // polygonFeature.setStyle([
   //   new Style({
   //     fill: new Fill({
@@ -55785,14 +55818,20 @@ var createPolygonLayer = function createPolygonLayer(geojson1, geojson2) {
   var polygons1 = [];
   var polygons2 = [];
   geojson1.features.map(function (feature) {
-    if (feature.properties && feature.properties.name && feature.geometry.type == 'Polygon') {
-      polygons1.push(createTransparentPolygon(feature.geometry.coordinates, feature.properties.name));
-    }
+    if (feature.properties && feature.properties.name && feature.geometry && feature.geometry.type
+    /* && feature.geometry.type == 'Polygon' */
+    ) {
+        // polygons1.push(createTransparentPolygon(feature.geometry.coordinates, feature.properties.name));
+        polygons1.push(createTransparentPolygon(feature));
+      }
   });
   geojson2.features.map(function (feature) {
-    if (feature.properties && feature.properties.name && feature.geometry.type == 'Polygon') {
-      polygons2.push(createTransparentPolygon(feature.geometry.coordinates, feature.properties.name));
-    }
+    if (feature.properties && feature.properties.name && feature.geometry && feature.geometry.type
+    /* && feature.geometry.type == 'Polygon' */
+    ) {
+        // polygons2.push(createTransparentPolygon(feature.geometry.coordinates, feature.properties.name));
+        polygons2.push(createTransparentPolygon(feature));
+      }
   });
   return {
     buildingLayer1: new ol_layer__WEBPACK_IMPORTED_MODULE_1__["Vector"]({

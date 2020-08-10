@@ -22,12 +22,36 @@ const measureObj = (obj: { [key: string]: number }) => {
   };
 };
 
-export const createTransparentPolygon = (coordinates: number[][][], label: string) => {
+// export const createTransparentPolygon = (coordinates: number[][][], label: string) => {
+//   const polygonFeature = new Feature({
+//     type: 'Polygon',
+//     geometry: new Polygon(coordinates).transform('EPSG:4326', 'EPSG:3857'),
+//   });
+//   polygonFeature.set('label', label);
+//   polygonFeature.setStyle(
+//     new Style({
+//       fill: new Fill({
+//         color: '#ffffff00',
+//       }),
+//     })
+//   );
+//   return polygonFeature;
+// };
+
+export const createTransparentPolygon = (feature: FeatureGeojson) => {
+  let coordinates: number[][][] = [];
+  if (feature.geometry.type == 'Polygon') {
+    coordinates = feature.geometry.coordinates;
+  } else if (feature.geometry.type == 'LineString') {
+    // @ts-ignore
+    coordinates = [feature.geometry.coordinates];
+  }
+
   const polygonFeature = new Feature({
     type: 'Polygon',
     geometry: new Polygon(coordinates).transform('EPSG:4326', 'EPSG:3857'),
   });
-  polygonFeature.set('label', label);
+  polygonFeature.set('label', feature.properties.name);
   polygonFeature.setStyle(
     new Style({
       fill: new Fill({
@@ -40,9 +64,16 @@ export const createTransparentPolygon = (coordinates: number[][][], label: strin
 
 export const createPolygonInfo = (feature: FeatureGeojson, label: string, color: string) => {
   // const centerCoord = centroid(feature).geometry.coordinates;
+  let coordinates: number[][][] = [];
+  if (feature.geometry.type == 'Polygon') {
+    coordinates = feature.geometry.coordinates;
+  } else if (feature.geometry.type == 'LineString') {
+    //@ts-ignore
+    coordinates = [feature.geometry.coordinates];
+  }
   const polygonFeature = new Feature({
     type: 'Polygon',
-    geometry: new Polygon(feature.geometry.coordinates).transform('EPSG:4326', 'EPSG:3857'),
+    geometry: new Polygon(coordinates).transform('EPSG:4326', 'EPSG:3857'),
   });
 
   // polygonFeature.setStyle([
@@ -86,14 +117,26 @@ export const createPolygonLayer = (geojson1: GeoJSON, geojson2: GeoJSON) => {
   const polygons2: Feature[] = [];
 
   geojson1.features.map(feature => {
-    if (feature.properties && feature.properties.name && feature.geometry.type == 'Polygon') {
-      polygons1.push(createTransparentPolygon(feature.geometry.coordinates, feature.properties.name));
+    if (
+      feature.properties &&
+      feature.properties.name &&
+      feature.geometry &&
+      feature.geometry.type /* && feature.geometry.type == 'Polygon' */
+    ) {
+      // polygons1.push(createTransparentPolygon(feature.geometry.coordinates, feature.properties.name));
+      polygons1.push(createTransparentPolygon(feature));
     }
   });
 
   geojson2.features.map(feature => {
-    if (feature.properties && feature.properties.name && feature.geometry.type == 'Polygon') {
-      polygons2.push(createTransparentPolygon(feature.geometry.coordinates, feature.properties.name));
+    if (
+      feature.properties &&
+      feature.properties.name &&
+      feature.geometry &&
+      feature.geometry.type /* && feature.geometry.type == 'Polygon' */
+    ) {
+      // polygons2.push(createTransparentPolygon(feature.geometry.coordinates, feature.properties.name));
+      polygons2.push(createTransparentPolygon(feature));
     }
   });
 

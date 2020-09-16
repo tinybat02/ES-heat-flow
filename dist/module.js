@@ -55425,7 +55425,7 @@ function (_super) {
     }
 
     var hoverInteraction1 = new ol_interaction_Select__WEBPACK_IMPORTED_MODULE_8__["default"]({
-      condition: ol_events_condition__WEBPACK_IMPORTED_MODULE_7__["click"],
+      condition: ol_events_condition__WEBPACK_IMPORTED_MODULE_7__["pointerMove"],
       style: function style(feature) {
         var style = {};
         var geometry_type = feature.getGeometry().getType();
@@ -55442,7 +55442,7 @@ function (_super) {
       }
     });
     var hoverInteraction2 = new ol_interaction_Select__WEBPACK_IMPORTED_MODULE_8__["default"]({
-      condition: ol_events_condition__WEBPACK_IMPORTED_MODULE_7__["click"],
+      condition: ol_events_condition__WEBPACK_IMPORTED_MODULE_7__["pointerMove"],
       style: function style(feature) {
         var style = {};
         var geometry_type = feature.getGeometry().getType();

@@ -55431,7 +55431,7 @@ function (_super) {
         var geometry_type = feature.getGeometry().getType();
         style['Polygon'] = [new ol_style__WEBPACK_IMPORTED_MODULE_9__["Style"]({
           fill: new ol_style__WEBPACK_IMPORTED_MODULE_9__["Fill"]({
-            color: 'rgba(255, 255, 255, 0.2)'
+            color: 'rgba(255, 255, 255, 0.5)'
           }),
           stroke: new ol_style__WEBPACK_IMPORTED_MODULE_9__["Stroke"]({
             color: '#49A8DE',
@@ -55448,7 +55448,7 @@ function (_super) {
         var geometry_type = feature.getGeometry().getType();
         style['Polygon'] = [new ol_style__WEBPACK_IMPORTED_MODULE_9__["Style"]({
           fill: new ol_style__WEBPACK_IMPORTED_MODULE_9__["Fill"]({
-            color: 'rgba(255, 255, 255, 0.2)'
+            color: 'rgba(255, 255, 255, 0.5)'
           }),
           stroke: new ol_style__WEBPACK_IMPORTED_MODULE_9__["Stroke"]({
             color: '#49A8DE',

@@ -6,7 +6,7 @@ import XYZ from 'ol/source/XYZ';
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
 import { fromLonLat } from 'ol/proj';
 import { defaults, DragPan, MouseWheelZoom } from 'ol/interaction';
-import { platformModifierKeyOnly, pointerMove } from 'ol/events/condition';
+import { platformModifierKeyOnly, click } from 'ol/events/condition';
 import Select from 'ol/interaction/Select';
 import { Style, Fill, Stroke } from 'ol/style';
 import { createPolygonLayer, processTransitionData, createHeatInfo } from './utils/helpers';
@@ -119,7 +119,7 @@ export class MainPanel extends PureComponent<Props, State> {
     }
 
     const hoverInteraction1 = new Select({
-      condition: pointerMove,
+      condition: click,
       style: function(feature) {
         const style: { [key: string]: any[] } = {};
         const geometry_type = feature.getGeometry().getType();
@@ -141,7 +141,7 @@ export class MainPanel extends PureComponent<Props, State> {
     });
 
     const hoverInteraction2 = new Select({
-      condition: pointerMove,
+      condition: click,
       style: function(feature) {
         const style: { [key: string]: any[] } = {};
         const geometry_type = feature.getGeometry().getType();

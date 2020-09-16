@@ -127,7 +127,7 @@ export class MainPanel extends PureComponent<Props, State> {
         style['Polygon'] = [
           new Style({
             fill: new Fill({
-              color: '#ffffff00',
+              color: 'rgba(255, 255, 255, 0.2)',
             }),
             stroke: new Stroke({
               color: '#49A8DE',
@@ -149,7 +149,7 @@ export class MainPanel extends PureComponent<Props, State> {
         style['Polygon'] = [
           new Style({
             fill: new Fill({
-              color: '#ffffff00',
+              color: 'rgba(255, 255, 255, 0.2)',
             }),
             stroke: new Stroke({
               color: '#49A8DE',

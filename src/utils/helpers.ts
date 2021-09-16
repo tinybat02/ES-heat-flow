@@ -22,22 +22,6 @@ const measureObj = (obj: { [key: string]: number }) => {
   };
 };
 
-// export const createTransparentPolygon = (coordinates: number[][][], label: string) => {
-//   const polygonFeature = new Feature({
-//     type: 'Polygon',
-//     geometry: new Polygon(coordinates).transform('EPSG:4326', 'EPSG:3857'),
-//   });
-//   polygonFeature.set('label', label);
-//   polygonFeature.setStyle(
-//     new Style({
-//       fill: new Fill({
-//         color: '#ffffff00',
-//       }),
-//     })
-//   );
-//   return polygonFeature;
-// };
-
 export const createTransparentPolygon = (feature: FeatureGeojson) => {
   let coordinates: number[][][] = [];
   if (feature.geometry.type == 'Polygon') {
@@ -76,24 +60,6 @@ export const createPolygonInfo = (feature: FeatureGeojson, label: string, color:
     geometry: new Polygon(coordinates).transform('EPSG:4326', 'EPSG:3857'),
   });
 
-  // polygonFeature.setStyle([
-  //   new Style({
-  //     fill: new Fill({
-  //       color: color,
-  //     }),
-  //   }),
-  //   new Style({
-  //     geometry: new Point(centerCoord).transform('EPSG:4326', 'EPSG:3857'),
-  //     text: new Text({
-  //       stroke: new Stroke({
-  //         color: '#fff',
-  //         width: 3,
-  //       }),
-  //       font: '15px Calibri,sans-serif',
-  //       text: label,
-  //     }),
-  //   }),
-  // ]);
   polygonFeature.setStyle(
     new Style({
       fill: new Fill({
